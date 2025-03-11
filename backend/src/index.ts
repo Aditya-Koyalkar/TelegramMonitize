@@ -8,6 +8,7 @@ import db from "./lib/database/db.js";
 import addSession from "./middleware/session.middleware.js";
 import configCors from "./middleware/cors.middleware.js";
 import sessionValidator from "./middleware/unauthorized-access.middleware.js";
+import errorHandler from "./middleware/error.middleware.js";
 
 const app = new Hono();
 const port = Number(PORT) || 8080;
@@ -17,7 +18,7 @@ db();
 app.use(configCors);
 app.use(addSession);
 app.use(sessionValidator);
-
+app.onError(errorHandler);
 app.get("/", (c) => {
   return c.text("Welcome to the telegram bot API!");
 });
