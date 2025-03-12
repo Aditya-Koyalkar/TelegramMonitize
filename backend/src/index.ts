@@ -9,6 +9,7 @@ import addSession from "./middleware/session.middleware.js";
 import configCors from "./middleware/cors.middleware.js";
 import sessionValidator from "./middleware/unauthorized-access.middleware.js";
 import errorHandler from "./middleware/error.middleware.js";
+import { initBot } from "./bot/index.js";
 
 const app = new Hono();
 const port = Number(PORT) || 8080;
@@ -26,10 +27,15 @@ app.get("/", (c) => {
 app.on(["POST", "GET"], "/api/auth/*", (c) => {
   return auth.handler(c.req.raw);
 });
+
+//bot
+
+initBot();
+
 serve(
   {
     fetch: app.fetch,
-    port: port,
+    port: 8078,
   },
   (info) => {
     console.log(`Server is running on http://localhost:${info.port}`);
