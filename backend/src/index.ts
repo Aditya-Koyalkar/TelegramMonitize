@@ -10,6 +10,7 @@ import configCors from "./middleware/cors.middleware.js";
 import sessionValidator from "./middleware/unauthorized-access.middleware.js";
 import errorHandler from "./middleware/error.middleware.js";
 import { initBot } from "./bot/index.js";
+import route from "./routes/index.js";
 
 const app = new Hono();
 const port = Number(PORT) || 8080;
@@ -29,6 +30,8 @@ app.on(["POST", "GET"], "/api/auth/*", (c) => {
 });
 
 //bot
+
+app.route("/api", route);
 
 initBot();
 
