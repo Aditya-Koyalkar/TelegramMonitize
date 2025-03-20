@@ -26,11 +26,12 @@ const AuthForm = ({ action }: Props) => {
       </CardHeader>
       <CardContent className="space-y-3">
         <Button
+          variant={"lift"}
           disabled={isLoading}
           onClick={async () => {
             await authClient.signIn.social(
               {
-                provider: "github",
+                provider: "google",
                 callbackURL: `${APP_DOMAIN}/dashboard`,
               },
               {

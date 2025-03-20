@@ -11,12 +11,14 @@ import sessionValidator from "./middleware/unauthorized-access.middleware.js";
 import errorHandler from "./middleware/error.middleware.js";
 import { initBot } from "./bot/index.js";
 import route from "./routes/index.js";
+import { logger } from "hono/logger";
 
 const app = new Hono();
 const port = Number(PORT) || 8080;
 
 db();
 
+app.use(logger());
 app.use(configCors);
 app.use(addSession);
 app.use(sessionValidator);
@@ -38,7 +40,7 @@ initBot();
 serve(
   {
     fetch: app.fetch,
-    port: 8078,
+    port: port || 4000,
   },
   (info) => {
     console.log(`Server is running on http://localhost:${info.port}`);
