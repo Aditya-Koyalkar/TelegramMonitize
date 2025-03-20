@@ -11,7 +11,7 @@ const Layout = ({ children }: Props) => {
     <main className="flex items-center justify-center w-full h-screen">
       <div className="flex-1 w-full h-full bg-primary md:flex items-center justify-center p-6 hidden">
         <div>
-          <h1 className={cn("text-white tracking-wider")}>Group Gains</h1>
+          <h1 className={cn("text-white tracking-wider")}>TGMonitize Bot</h1>
           <P className="text-white">The only platform that is able monetize your telegram group.</P>
         </div>
       </div>
