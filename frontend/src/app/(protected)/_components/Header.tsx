@@ -2,6 +2,7 @@
 
 import SidebarTrigger from "@/components/custom/sidebar-trigger";
 import DashboardBreadcrumb from "./BreadCrumb";
+import HeaderProfile from "./HeaderProfile";
 // import HeaderProfile from "./header-profile";
 
 const DashboardHeader = () => {
@@ -11,8 +12,9 @@ const DashboardHeader = () => {
         <SidebarTrigger />
         <DashboardBreadcrumb />
       </div>
-
-      <div className="w-full h-fit flex items-center gap-4 justify-end flex-1">{/* <HeaderProfile /> */}</div>
+      <div className="w-full h-fit flex items-center gap-4 justify-end flex-1">
+        <HeaderProfile />
+      </div>
     </header>
   );
 };
