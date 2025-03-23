@@ -44,7 +44,19 @@ const HeaderProfile = () => {
           My Account
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="flex items-center justify-center gap-2 px-3 py-4">
+        <DropdownMenuItem
+          onClick={() => {
+            navigator.clipboard
+              .writeText(data?.user.id || "")
+              .then(() => {
+                toast("Colpied!", {
+                  description: "User Key copied",
+                });
+              })
+              .catch((err) => toast("Failed", { description: `${err}` }));
+          }}
+          className="flex items-center justify-center gap-2 px-3 py-4"
+        >
           <RiClipboardFill />
           <span
             className={cn(
@@ -53,21 +65,18 @@ const HeaderProfile = () => {
                 weight: "medium",
               })
             )}
-            onClick={() => {
-              navigator.clipboard
-                .writeText(data?.user.id || "")
-                .then(() => {
-                  toast("Colpied!", {
-                    description: "User Key copied",
-                  });
-                })
-                .catch((err) => toast("Failed", { description: `${err}` }));
-            }}
           >
             User Key
           </span>
         </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center justify-center gap-2 px-3 py-4">
+        <DropdownMenuItem
+          onClick={async () => {
+            await signOut();
+
+            router.push("/sign-in");
+          }}
+          className="flex items-center justify-center gap-2 px-3 py-4"
+        >
           <RiLogoutCircleFill />
           <span
             className={cn(
@@ -76,11 +85,6 @@ const HeaderProfile = () => {
                 weight: "medium",
               })
             )}
-            onClick={async () => {
-              await signOut();
-
-              router.push("/sign-in");
-            }}
           >
             Logout
           </span>
