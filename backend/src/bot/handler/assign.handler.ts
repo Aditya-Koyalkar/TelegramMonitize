@@ -3,8 +3,6 @@ import { Group } from "../../lib/database/models/group.model.js";
 import bot from "../../lib/telegram/config.js";
 import { ObjectId } from "mongodb";
 
-
-
 const successResponse = `# 🎉 Group Successfully Registered!
 
 Your group has been successfully registered with **Group Gain**! 🎊  
@@ -71,7 +69,7 @@ export const assignGroup = () => {
         bot.sendMessage(chatId, adminErrorResponse, { parse_mode: "Markdown" });
         return;
       }
-      if (msg.chat.title === "group" || msg.chat.title === "supergroup") {
+      if (msg.chat.type === "group" || msg.chat.type === "supergroup") {
         const groupId = msg.chat.id;
         const groupName = msg.chat.title;
 
