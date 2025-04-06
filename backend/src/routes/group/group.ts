@@ -7,7 +7,7 @@ const groupRoutes = new Hono<AuthSession>();
 groupRoutes.get("/groups", async (c) => {
   const user = c.get("user");
   const groups = await Group.find({
-    owner: user,
+    owner: user?.id,
   }).sort({
     createdAt: -1,
   });

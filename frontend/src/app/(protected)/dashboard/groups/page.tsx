@@ -1,5 +1,21 @@
-type Props = {};
+import getServerSession from "@/lib/better-auth/server-session";
+import { redirect } from "next/navigation";
+import PageHeader from "../../_components/PageHeader";
+import GroupCardWrapper from "./_components/groups-card";
 
-const GroupPage = ({}: Props) => {};
+const GroupsPage = async () => {
+  const session = await getServerSession();
 
-export default GroupPage;
+  if (!session) return redirect("/sign-in");
+
+  return (
+    <>
+      {/* Header */}
+      <PageHeader title="Telegram Groups" description="Manage your registered Telegram groups" />
+
+      <GroupCardWrapper userId={session.user.id} />
+    </>
+  );
+};
+
+export default GroupsPage;
