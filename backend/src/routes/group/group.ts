@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import type { AuthSession } from "../../lib/better-auth/auth-types.js";
 import { Group } from "../../lib/database/models/group.model.js";
+import { ValidationError } from "../../middleware/error.middleware.js";
 
 const groupRoutes = new Hono<AuthSession>();
 
@@ -18,7 +19,15 @@ groupRoutes.get("/groups", async (c) => {
   });
 });
 
-groupRoutes.post("/groups", async () => {});
+groupRoutes.put("/groups", async (c) => {
+  const { body } = await c.req.json();
+  const priceToUpdate = (Number(body.price) * 100).toString();
+  const groupInfo = await Group.findOne({ _id: body.id });
+
+  if (!groupInfo) {
+    throw new ValidationError("Group does not exist");
+  }
+});
 
 groupRoutes.delete("/groups/:id", async (c) => {
   const id = c.req.param("id");

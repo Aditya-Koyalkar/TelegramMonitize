@@ -11,6 +11,7 @@ import { RiLoader3Fill } from "@remixicon/react";
 import { Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { P } from "@/components/custom/P";
+import GroupMenu from "./group-menu";
 
 interface Props {
   group: IGroup;
@@ -31,7 +32,7 @@ function GroupCard({ group }: Props) {
                 <h3 className="font-bold">{group.name}</h3>
               </div>
             </div>
-            {/* <GroupMenu id={group._id} price={group.price} /> */}
+            <GroupMenu id={group._id} price={group.price} />
           </div>
 
           <div className="mt-6 grid grid-cols-2 gap-4">
