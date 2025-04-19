@@ -5,6 +5,7 @@
       "name": "backend",
       "dependencies": {
         "@hono/node-server": "^1.13.8",
+        "@paddle/paddle-node-sdk": "^2.5.1",
         "@types/node-telegram-bot-api": "^0.64.7",
         "axios": "^1.8.2",
         "better-auth": "^1.2.3",
@@ -97,6 +98,8 @@
     "@noble/hashes": ["@noble/hashes@1.7.1", "", {}, "sha512-B8XBPsn4vT/KJAGqDzbwztd+6Yte3P4V7iafm24bxgDe/mlRuK6xmWPuCNrKt2vDafZ8MfJLlchDG/vYafQEjQ=="],
 
     "@one-ini/wasm": ["@one-ini/wasm@0.1.1", "", {}, "sha512-XuySG1E38YScSJoMlqovLru4KTUNSjgVTIjyh7qMX6aNN5HY5Ct5LhRJdxO79JtTzKfzV/bnWpz+zquYrISsvw=="],
+
+    "@paddle/paddle-node-sdk": ["@paddle/paddle-node-sdk@2.5.1", "", {}, "sha512-ToawwF+NHqe9zU010vu7H2aKXfe03qjvGOL8xkLm0sHiMyaXZ1yHPyZ9IQzwoDqS7PkxPbZYCDw7Hp1IW+7WGg=="],
 
     "@peculiar/asn1-android": ["@peculiar/asn1-android@2.3.15", "", { "dependencies": { "@peculiar/asn1-schema": "^2.3.15", "asn1js": "^3.0.5", "tslib": "^2.8.1" } }, "sha512-8U2TIj59cRlSXTX2d0mzUKP7whfWGFMzTeC3qPgAbccXFrPNZLaDhpNEdG5U2QZ/tBv/IHlCJ8s+KYXpJeop6w=="],
 

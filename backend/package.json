@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.13.8",
+    "@paddle/paddle-node-sdk": "^2.5.1",
     "@types/node-telegram-bot-api": "^0.64.7",
     "axios": "^1.8.2",
     "better-auth": "^1.2.3",
