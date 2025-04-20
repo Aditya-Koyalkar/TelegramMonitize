@@ -46,7 +46,7 @@ groupRoutes.post("/groups", async (c) => {
   const { body } = await c.req.json();
   const priceToUpdate = (Number(body.price) * 100).toString();
   const groupInfo = await Group.findOne({
-    _id: body.ud,
+    _id: body.id,
   });
   if (!groupInfo) {
     throw new Error("Something went wrong.Please try again.");
@@ -75,6 +75,9 @@ groupRoutes.post("/groups", async (c) => {
       {
         price: body.price,
         price_id: price.id,
+      },
+      {
+        new: true,
       }
     );
   } else {
@@ -109,6 +112,7 @@ groupRoutes.post("/groups", async (c) => {
       }
     );
   }
+  return c.json({ success: true, result: updatedGroup });
 });
 
 export default groupRoutes;

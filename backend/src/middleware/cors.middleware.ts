@@ -4,7 +4,7 @@ import { CLIENT_DOMAIN } from "../lib/env.js";
 const configCors = cors({
   origin: CLIENT_DOMAIN,
   allowHeaders: ["Content-Type", "Authorization"],
-  allowMethods: ["POST", "GET", "OPTIONS", "DELETE"],
+  allowMethods: ["POST", "GET", "OPTIONS", "DELETE", "PUT"],
   exposeHeaders: ["Content-Length"],
   maxAge: 600,
   credentials: true,

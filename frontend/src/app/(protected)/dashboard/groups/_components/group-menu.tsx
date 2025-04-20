@@ -144,7 +144,7 @@ export const PriceGroupForm = ({
     mutationKey: ["groups"],
     mutationFn: async (values: TPriceGroupForm) =>
       (
-        await axiosDashboardInstance.put<ApiResponse<IGroup>>("/groups", {
+        await axiosDashboardInstance.post<ApiResponse<IGroup>>("/groups", {
           body: values,
         })
       ).data,
@@ -154,9 +154,9 @@ export const PriceGroupForm = ({
         const newGroup = res.result;
 
         const updatedGroup = oldGroups.map((oldGroup) => (oldGroup._id === newGroup?._id ? newGroup : oldGroup));
-
-        const updatedData = { ...oldData, result: updatedGroup };
-
+        console.log(newGroup);
+        const updatedData = { ...oldData, result: [...updatedGroup] };
+        console.log(updatedData);
         return updatedData;
       });
 
