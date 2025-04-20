@@ -21,16 +21,6 @@ groupRoutes.get("/groups", async (c) => {
   });
 });
 
-groupRoutes.put("/groups", async (c) => {
-  const { body } = await c.req.json();
-  const priceToUpdate = (Number(body.price) * 100).toString();
-  const groupInfo = await Group.findOne({ _id: body.id });
-
-  if (!groupInfo) {
-    throw new ValidationError("Group does not exist");
-  }
-});
-
 groupRoutes.delete("/groups/:id", async (c) => {
   const id = c.req.param("id");
   await Group.deleteOne({ _id: id });
