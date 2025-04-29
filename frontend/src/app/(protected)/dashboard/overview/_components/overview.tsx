@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import OverviewStats from "./overview-stats";
 import { ApiResponse, OverviewResponse } from "@/@types/response";
 import CustomersTable from "./customers-table";
+import useWebsocket from "@/hooks/use-websocket";
+import socket from "@/lib/socket/config";
 
 export type QueryRes = UseQueryResult<ApiResponse<OverviewResponse | null>, Error>;
 
@@ -21,6 +23,13 @@ const Overview = ({ userId }: { userId: string }) => {
       description: "Error fetching data! please refresh.",
     });
   }
+
+  useWebsocket(() => {
+    socket.on("update-overview", () => {
+      queryClient.invalidateQueries({ queryKey: ["overview"] });
+    });
+  }, userId);
+
   return (
     <div className="min-h-screen">
       <div className="mx-auto max-w-6xl space-y-8">
