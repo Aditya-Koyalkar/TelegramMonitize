@@ -58,8 +58,12 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   console.log("Socket client connected", socket.id);
-
+  socket.on("join-room", (userId) => {
+    socket.join(userId);
+  });
   socket.on("disconnected", () => {
     console.log("Socket client connected", socket.id);
   });
 });
+
+export { io };
