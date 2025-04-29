@@ -12,6 +12,8 @@ import { Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { P } from "@/components/custom/P";
 import GroupMenu from "./group-menu";
+import socket from "@/lib/socket/config";
+import useWebsocket from "@/hooks/use-websocket";
 
 interface Props {
   group: IGroup;
@@ -61,7 +63,19 @@ function GroupCard({ group }: Props) {
 
 const GroupCardWrapper = ({ userId }: { userId: string }) => {
   const queryClient = useQueryClient();
-
+  useWebsocket(() => {
+    socket.on("group-assignned", (newGroup: IGroup) => {
+      queryClient.setQueryData(["groups"], (oldData: ApiResponse<IGroup[]>) => {
+        const oldGroup = oldData.result;
+        const withNewGroup = [newGroup, ...oldGroup];
+        const newData: ApiResponse<IGroup[]> = {
+          ...oldData,
+          result: withNewGroup,
+        };
+        return newData;
+      });
+    });
+  }, userId);
   const {
     data: res,
     error,

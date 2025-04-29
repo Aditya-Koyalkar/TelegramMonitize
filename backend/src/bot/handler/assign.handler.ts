@@ -1,3 +1,4 @@
+import { io } from "../../index.js";
 import client from "../../lib/better-auth/db.js";
 import { Group } from "../../lib/database/models/group.model.js";
 import bot from "../../lib/telegram/config.js";
@@ -98,6 +99,7 @@ export const assignGroup = () => {
         bot.sendMessage(chatId, successResponse, {
           parse_mode: "Markdown",
         });
+        io.to(userId || "").emit("group-assignned", newGroup);
         return;
       }
       bot.sendMessage(chatId, "please provide a valid Group User-ID");
