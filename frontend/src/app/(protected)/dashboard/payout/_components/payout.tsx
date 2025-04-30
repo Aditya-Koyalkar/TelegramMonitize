@@ -1,6 +1,5 @@
-// import BalanceCard from "./balance-card";
-// import PayoutHistory from "./payout-history";
-
+import PayoutHistory from "./payout-history";
+import BalanceCard from "./balance-card";
 import ManagePayout from "./manage-payout";
 
 function Payout({ userId }: { userId: string }) {
@@ -10,10 +9,10 @@ function Payout({ userId }: { userId: string }) {
       <ManagePayout />
 
       {/* Balance Card */}
-      {/* <BalanceCard userId={userId} /> */}
+      <BalanceCard userId={userId} />
 
       {/* Payout History */}
-      {/* <PayoutHistory userId={userId} /> */}
+      <PayoutHistory userId={userId} />
     </div>
   );
 }

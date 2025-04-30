@@ -13,6 +13,7 @@ const paypalRoute = new Hono<AuthSession>();
 paypalRoute.get("connect", async (c) => {
   const user = c.get("user")!;
   const integration = await Integration.findOne({ owner: user.id });
+  return c.json({ success: true, message: "", result: integration }, 200);
 });
 
 paypalRoute.post("connect", async (c) => {
