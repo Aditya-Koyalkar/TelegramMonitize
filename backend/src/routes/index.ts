@@ -4,6 +4,7 @@ import statsRoutes from "./stats/stats.route.js";
 import groupRoutes from "./group/group.js";
 import walletRoute from "./wallet/wallet.js";
 import payoutHistoryRoutes from "./payout-history/payout-history.js";
+import paypalRoute from "./payout/payout.route.js";
 const routes = new Hono();
 
 routes.route("/v1/user", authRoutes);
@@ -11,4 +12,5 @@ routes.route("/v1/dashboard", statsRoutes);
 routes.route("/v1/dashboard", groupRoutes);
 routes.route("/v1/dashboard", walletRoute);
 routes.route("/v1/dashboard", payoutHistoryRoutes);
+routes.route("/v1/dashboard/paypal", paypalRoute);
 export default routes;
