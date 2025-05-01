@@ -19,7 +19,7 @@ interface CustomData {
     group: {
       id: string;
       owner: string;
-      amount: number;
+      price: number;
       entityType: string;
       priceId: string;
     };
@@ -43,7 +43,7 @@ paddleWebhookRoute.post("/webhook/paddle", async (c) => {
       const userId = customData?.group?.owner;
       const groupId = customData?.group?.id;
       const priceId = customData?.group?.priceId;
-      const amount = customData?.group?.amount;
+      const amount = customData?.group?.price;
       const anonymousKey = customData?.anonymousKey;
       const eventInfo = eventData.data as any;
 

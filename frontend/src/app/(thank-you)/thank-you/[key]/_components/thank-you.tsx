@@ -117,12 +117,12 @@ const ThankYou = ({ anonymousKey }: { anonymousKey: string }) => {
             <div className="space-y-4">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Subtotal</span>
-                <span className="font-medium">${transaction?.price.toFixed(2)}</span>
+                <span className="font-medium">${transaction?.price?.toFixed(2)}</span>
               </div>
               <Separator />
               <div className="flex justify-between text-lg font-bold">
                 <span>Total</span>
-                <span>${transaction?.price.toFixed(2)}</span>
+                <span>${transaction?.price?.toFixed(2)}</span>
               </div>
             </div>
           </div>
