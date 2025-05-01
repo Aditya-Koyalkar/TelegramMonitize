@@ -26,7 +26,7 @@ interface CustomData {
   };
 }
 
-paddleWebhookRoute.post("/paddle", async (c) => {
+paddleWebhookRoute.post("/webhook/paddle", async (c) => {
   try {
     const subscriptionKey = randomBytes(10).toString("hex");
     const signature = (c.req.header("paddle-signature") as string) || "";
