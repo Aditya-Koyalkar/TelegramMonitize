@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import PageHeader from "../../_components/PageHeader";
 import GroupCardWrapper from "./_components/groups-card";
 
+export const dynamic = "force-dynamic";
+
 const GroupsPage = async () => {
   const session = await getServerSession();
 

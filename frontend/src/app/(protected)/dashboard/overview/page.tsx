@@ -2,6 +2,8 @@ import getServerSession from "@/lib/better-auth/server-session";
 import { redirect } from "next/navigation";
 import Overview from "./_components/overview";
 
+export const dynamic = "force-dynamic";
+
 const OverviewPage = async () => {
   const session = await getServerSession();
   if (!session) {
