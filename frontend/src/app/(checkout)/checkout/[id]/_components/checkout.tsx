@@ -8,17 +8,17 @@ import { useEffect, useState } from "react";
 
 type Props = {
   group: IGroup;
-  anonymouskey: string;
+  anonymousKey: string;
 };
 
-const Checkout = ({ anonymouskey, group }: Props) => {
+const Checkout = ({ anonymousKey, group }: Props) => {
   const paddle = usePaddle();
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     setIsLoading(true);
     paddle?.Checkout.open({
       settings: {
-        successUrl: `${APP_DOMAIN}/thank-you/${anonymouskey}`,
+        successUrl: `${APP_DOMAIN}/thank-you/${anonymousKey}`,
       },
       items: [
         {
@@ -28,7 +28,7 @@ const Checkout = ({ anonymouskey, group }: Props) => {
       ],
       customData: {
         entityType: "subscription",
-        anonymouskey,
+        anonymousKey,
         group: {
           id: group._id,
           owner: group.owner,

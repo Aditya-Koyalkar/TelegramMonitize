@@ -9,14 +9,14 @@ type Props = {
 
 const page = async ({ params }: Props) => {
   const groupId = (await params).id;
-  const anonymouseKey = randomBytes(10).toString("hex");
+  const anonymousKey = randomBytes(10).toString("hex");
 
   const response = await findOneGroup(groupId);
   const group = response.result;
   if (!group) {
     return <P>{response.message}</P>;
   }
-  return <Checkout group={group} anonymouskey={anonymouseKey} />;
+  return <Checkout group={group} anonymousKey={anonymousKey} />;
 };
 
 export default page;
