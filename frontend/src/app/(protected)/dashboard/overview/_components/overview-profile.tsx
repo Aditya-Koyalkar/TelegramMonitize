@@ -1,9 +1,9 @@
 "use client";
 
-import PageHeader from "@/app/(protected)/_components/PageHeader";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "@/lib/better-auth/auth-client";
+import PageHeader from "../../../_components/PageHeader";
 
 const OverviewProfile = () => {
   const { data, isPending } = useSession();
