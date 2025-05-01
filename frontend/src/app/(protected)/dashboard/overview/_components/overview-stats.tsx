@@ -4,8 +4,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { DollarSign, Users } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { P } from "@/components/custom/P";
-import { UseQueryResult } from "@tanstack/react-query";
-import { OverviewResponse } from "@/@types/response";
 import { QueryRes } from "./overview";
 
 const OverviewStats = ({ query }: { query: QueryRes }) => {

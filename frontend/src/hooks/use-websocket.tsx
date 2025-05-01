@@ -1,5 +1,5 @@
 import socket from "@/lib/socket/config";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 function useWebsocket(callback: () => void, key?: any) {
   useEffect(() => {

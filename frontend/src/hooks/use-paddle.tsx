@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Paddle, initializePaddle } from "@paddle/paddle-js";
 import { NEXT_PUBLIC_PADDLE_CLIENT_TOKEN } from "@/utils/env";
 import { toast } from "sonner";
