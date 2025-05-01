@@ -5,6 +5,9 @@ import groupRoutes from "./group/group.js";
 import walletRoute from "./wallet/wallet.js";
 import payoutHistoryRoutes from "./payout-history/payout-history.js";
 import paypalRoute from "./payout/payout.route.js";
+import publicGroupRoute from "./public-group/publicgroup.route.js";
+import orderRoute from "./order/order.route.js";
+import paddleWebhookRoute from "./paddle-webhook/paddlewebhook.route.js";
 const routes = new Hono();
 
 routes.route("/v1/user", authRoutes);
@@ -13,4 +16,7 @@ routes.route("/v1/dashboard", groupRoutes);
 routes.route("/v1/dashboard", walletRoute);
 routes.route("/v1/dashboard", payoutHistoryRoutes);
 routes.route("/v1/dashboard/paypal", paypalRoute);
+routes.route("/v1", publicGroupRoute);
+routes.route("/v1", orderRoute);
+routes.route("/v1", paddleWebhookRoute);
 export default routes;
