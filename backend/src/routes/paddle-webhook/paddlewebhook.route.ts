@@ -143,7 +143,7 @@ paddleWebhookRoute.post("/webhook/paddle", async (c) => {
           }
 
           const { error } = await resend.emails.send({
-            from: "Telegram monitizer <support@evocreator.com>",
+            from: "Telegram monitizer <support@adityakoyalkar.tech>",
             to: [customer?.email as string],
             subject: "Your Subscription activation key",
             text: `Subscriber email ${customer?.email}. Subscription key ${subscriptionKey}`,
