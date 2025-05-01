@@ -11,7 +11,7 @@ statsRoutes.get("/overview", async (c) => {
   const last30Day = new Date();
   const last7Day = new Date();
   last30Day.setDate(last30Day.getDate() - 30);
-  last30Day.setDate(last7Day.getDate() - 7);
+  last7Day.setDate(last7Day.getDate() - 7);
   const groups = await Group.find({
     owner: user.id,
     createdAt: {
@@ -35,7 +35,6 @@ statsRoutes.get("/overview", async (c) => {
     owner: user.id,
     createdAt: { $gte: last7Day },
   }).countDocuments();
-
   const customerDetails = await Customer.find({
     owner: user.id,
     createdAt: { $gte: last7Day },
