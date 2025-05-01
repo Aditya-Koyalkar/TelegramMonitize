@@ -33,7 +33,7 @@ const ThankYou = ({ anonymousKey }: { anonymousKey: string }) => {
       try {
         const res = await axiosBaseInstance.get<ApiResponse<ThankYouResponse>>(`/order/${anonymousKey}`);
 
-        const status = res.data.result.transaction.status;
+        const status = res.data.result.transaction?.status ?? "created";
 
         setStatus(status);
 
@@ -75,7 +75,7 @@ const ThankYou = ({ anonymousKey }: { anonymousKey: string }) => {
   return (
     <Card className="overflow-hidden border-0 shadow-lg">
       {/* Status Header */}
-      <div className={cn("flex flex-col items-center text-center p-8 border-b", currentStatus.bgColor, currentStatus.borderColor)}>
+      <div className={cn("flex flex-col items-center text-center p-8 border-b", currentStatus?.bgColor, currentStatus?.borderColor)}>
         <currentStatus.icon className={cn("w-16 h-16 mb-4", currentStatus.color)} />
         <h1 className="text-2xl font-bold mb-2">{currentStatus.title}</h1>
         <p className="text-muted-foreground">{currentStatus.description}</p>
@@ -97,11 +97,11 @@ const ThankYou = ({ anonymousKey }: { anonymousKey: string }) => {
             <div className="space-y-4">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Transaction Number</span>
-                <span className="font-medium">{transaction._id}</span>
+                <span className="font-medium">{transaction?._id}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Date</span>
-                <span className="font-medium">{format(transaction.createdAt, "dd-MMM-yyyy")}</span>
+                <span className="font-medium">{transaction && format(transaction?.createdAt, "dd-MMM-yyyy")}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Email</span>
@@ -117,12 +117,12 @@ const ThankYou = ({ anonymousKey }: { anonymousKey: string }) => {
             <div className="space-y-4">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Subtotal</span>
-                <span className="font-medium">${transaction.price.toFixed(2)}</span>
+                <span className="font-medium">${transaction?.price.toFixed(2)}</span>
               </div>
               <Separator />
               <div className="flex justify-between text-lg font-bold">
                 <span>Total</span>
-                <span>${transaction.price.toFixed(2)}</span>
+                <span>${transaction?.price.toFixed(2)}</span>
               </div>
             </div>
           </div>
