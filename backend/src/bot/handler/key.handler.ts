@@ -8,6 +8,9 @@ export const keyVerify = () => {
     const userId = msg.from?.id; // telegram - user -id
     const chatId = msg.chat.id;
     const key = match?.[1];
+    if (mongoose?.conn) {
+      return;
+    }
     const subscription = await Subscription.findOne({
       subscription_key: key,
     });
