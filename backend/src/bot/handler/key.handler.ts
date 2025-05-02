@@ -8,7 +8,7 @@ export const keyVerify = () => {
     const userId = msg.from?.id; // telegram - user -id
     const chatId = msg.chat.id;
     const key = match?.[1];
-    if (mongoose?.conn) {
+    if (!mongoose?.conn) {
       return;
     }
     const subscription = await Subscription.findOne({
@@ -35,7 +35,7 @@ export const keyVerify = () => {
     }
 
     if (key && key === subscription.subscription_key) {
-      const link = (await generateInviteLink(Number(groupInfo.group_id), userId as number)).invite_link;
+      const link = await generateInviteLink(Number(groupInfo.group_id), userId as number);
       bot.sendMessage(chatId, `Your key is valid. Invite link:  ${link}`);
       return;
     }

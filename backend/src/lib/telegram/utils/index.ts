@@ -18,35 +18,33 @@ export const generateInviteLink = async (groupId: number, userId: number) => {
       throw new Error("Bot does not have permission to invite users");
     }
 
-    // Try to unban user if they were previously banned
-    try {
-      await bot.unbanChatMember(groupId, userId, { only_if_banned: true });
-      console.log(`Successfully unbanned user ${userId} from group ${groupId}`);
-    } catch (error: unknown) {
-      // Type guard for error with message property
-      const unbanError = error as { message?: string };
+    // // Try to unban user if they were previously banned
+    // try {
+    //   // await bot.unbanChatMember(groupId, userId, { only_if_banned: true });
+    //   console.log(3);
+    //   console.log(`Successfully unbanned user ${userId} from group ${groupId}`);
+    // } catch (error: unknown) {
+    //   // Type guard for error with message property
+    //   const unbanError = error as { message?: string };
 
-      // Log error but continue - user might not be banned
-      console.warn(`Unban operation failed: ${unbanError.message || "Unknown error"}`);
+    //   // Log error but continue - user might not be banned
+    //   console.warn(`Unban operation failed: ${unbanError.message || "Unknown error"}`);
 
-      // If error is critical (not just "user not banned"), we might want to rethrow
-      if (
-        unbanError.message &&
-        unbanError.message !== "Bad Request: PARTICIPANT_ID_INVALID" &&
-        unbanError.message !== "Bad Request: USER_NOT_PARTICIPANT"
-      ) {
-        throw error;
-      }
-    }
-
-    // Create time-limited single-use invite link
+    //   // If error is critical (not just "user not banned"), we might want to rethrow
+    //   if (
+    //     unbanError.message &&
+    //     unbanError.message !== "Bad Request: PARTICIPANT_ID_INVALID" &&
+    //     unbanError.message !== "Bad Request: USER_NOT_PARTICIPANT"
+    //   ) {
+    //     throw error;
+    //   }
+    // }
     const link = await bot.createChatInviteLink(groupId, {
       expire_date: Math.floor(Date.now() / 1000) + 3600, // expires in 1 hour
       member_limit: 1, // single-use link
       name: `Invite for user ${userId}`, // Optional: adding name for tracking
     });
-
-    return link;
+    return link.invite_link;
   } catch (error: unknown) {
     const typedError = error as { message?: string };
     console.error(`Failed to generate invite link: ${typedError.message || "Unknown error"}`);
