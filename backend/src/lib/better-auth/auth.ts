@@ -6,7 +6,6 @@ import { createAuthMiddleware } from "better-auth/api";
 import db from "../database/db.js";
 import { Wallet } from "../database/models/wallet.model.js";
 import { ObjectId } from "mongodb";
-
 const dbClient = client.db();
 export const auth = betterAuth({
   trustedOrigins: [CLIENT_DOMAIN],
@@ -20,6 +19,9 @@ export const auth = betterAuth({
     defaultCookieAttributes: {
       sameSite: "none",
       secure: true,
+    },
+    crossSubDomainCookies: {
+      enabled: true,
     },
   },
   database: mongodbAdapter(dbClient),
