@@ -32,7 +32,7 @@ export const keyVerify = () => {
     }
 
     if (key && key === subscription.subscription_key) {
-      const link = (await generateInviteLink(groupInfo.group_id, userId as number)).invite_link;
+      const link = (await generateInviteLink(Number(groupInfo.group_id), userId as number)).invite_link;
       bot.sendMessage(chatId, `Your key is valid. Invite link:  ${link}`);
       return;
     }
