@@ -23,7 +23,6 @@ export const auth = betterAuth({
     crossSubDomainCookies: {
       enabled: true,
     },
-    useSecureCookies: true,
   },
   database: mongodbAdapter(dbClient),
   hooks: {
