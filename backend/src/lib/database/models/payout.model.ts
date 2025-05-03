@@ -21,8 +21,7 @@ interface PayoutModel extends Omit<IPayout, "_id">, Document {
 const payoutSchema: Schema<PayoutModel> = new Schema(
   {
     owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
       required: true,
     },
     amount: {

@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { axiosDashboardInstance } from "@/lib/axios/config";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RiLoader3Fill, RiMailFill } from "@remixicon/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -21,13 +22,23 @@ import { z } from "zod";
 
 const ManagePayout = () => {
   const [isIntegrationDialogOpen, setIsIntegrationDialogOpen] = useState(false);
+  const { getToken } = useAuth();
   const {
     data: res,
     error,
     isLoading,
   } = useQuery({
     queryKey: ["connection"],
-    queryFn: async () => (await axiosDashboardInstance.get<ApiResponse<IIntegration>>("/paypal/connect")).data,
+    queryFn: async () => {
+      const token = await getToken();
+      return (
+        await axiosDashboardInstance.get<ApiResponse<IIntegration>>("/paypal/connect", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+      ).data;
+    },
   });
 
   const result = res?.result;
@@ -95,7 +106,6 @@ export const IntegrationGroupForm = ({
     defaultValues: {
       email: integration?.paypal.email || "",
     },
-    
   });
 
   const { mutateAsync, isPending } = useMutation({

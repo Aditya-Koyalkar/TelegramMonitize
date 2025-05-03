@@ -2,33 +2,35 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useSession } from "@/lib/better-auth/auth-client";
 import PageHeader from "../../../_components/PageHeader";
+import { useUser } from "@clerk/nextjs";
 
 const OverviewProfile = () => {
-  const { data, isPending } = useSession();
+  const { isLoaded, isSignedIn, user } = useUser();
 
   return (
     <>
-      {isPending && (
-        <div className="flex items-center gap-4">
-          <Skeleton className="size-20 rounded-full" />
-          <div className="space-y-3">
-            <Skeleton className="h-12 w-64 rounded-md " />
-            <Skeleton className="h-4 w-40 rounded-md " />
+      {!isLoaded ||
+        !isSignedIn ||
+        (!user && (
+          <div className="flex items-center gap-4">
+            <Skeleton className="size-20 rounded-full" />
+            <div className="space-y-3">
+              <Skeleton className="h-12 w-64 rounded-md " />
+              <Skeleton className="h-4 w-40 rounded-md " />
+            </div>
           </div>
-        </div>
-      )}
+        ))}
 
-      {!isPending && (
+      {isLoaded && (
         <div className="flex items-center gap-4">
           <Avatar className="size-20 rounded-full">
-            <AvatarImage src={data?.user?.image || "https://github.com/shadcn.png"} />
+            <AvatarImage src={user?.imageUrl || "https://github.com/shadcn.png"} />
             <AvatarFallback>
               <Skeleton className="size-10 rounded-full" />
             </AvatarFallback>
           </Avatar>
-          <PageHeader title={`Hii, ${data?.user.name}`} description={`${data?.user.email}`} />
+          <PageHeader title={`Hii, ${user?.fullName}`} description={`${user?.emailAddresses[0].emailAddress}`} />
         </div>
       )}
     </>

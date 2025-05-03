@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import type { AuthSession } from "../../lib/better-auth/auth-types.js";
+import type { AuthSession } from "../../lib/clerk/auth-types.js";
 import { Group } from "../../lib/database/models/group.model.js";
 import { Transaction } from "../../lib/database/models/transaction.model.js";
 import { Customer } from "../../lib/database/models/customer.model.js";
@@ -7,13 +7,13 @@ import { Customer } from "../../lib/database/models/customer.model.js";
 const statsRoutes = new Hono<AuthSession>();
 
 statsRoutes.get("/overview", async (c) => {
-  const user = c.get("user")!;
+  const userId = c.get("userId")!;
   const last30Day = new Date();
   const last7Day = new Date();
   last30Day.setDate(last30Day.getDate() - 30);
   last7Day.setDate(last7Day.getDate() - 7);
   const groups = await Group.find({
-    owner: user.id,
+    owner: userId,
     createdAt: {
       $gte: last30Day,
     },
@@ -22,21 +22,21 @@ statsRoutes.get("/overview", async (c) => {
     return sum + grp.revenue;
   }, 0);
   const transactionCount = await Transaction.find({
-    owner: user.id,
+    owner: userId,
     createdAt: { $gte: last7Day },
   }).countDocuments();
   const transactionDetails = await Transaction.find({
-    owner: user.id,
+    owner: userId,
     createdAt: { $gte: last7Day },
   }).sort({
     createdAt: -1,
   });
   const customerCount = await Customer.findOne({
-    owner: user.id,
+    owner: userId,
     createdAt: { $gte: last7Day },
   }).countDocuments();
   const customerDetails = await Customer.find({
-    owner: user.id,
+    owner: userId,
     createdAt: { $gte: last7Day },
   }).sort({ createdAt: -1 });
 

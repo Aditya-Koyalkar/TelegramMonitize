@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import type { AuthSession } from "../../lib/better-auth/auth-types.js";
+import type { AuthSession } from "../../lib/clerk/auth-types.js";
 import { Integration } from "../../lib/database/models/integration.model.js";
 import { randomBytes } from "crypto";
 import { generatePaypalAccessToken } from "../../lib/paypal/utils.js";

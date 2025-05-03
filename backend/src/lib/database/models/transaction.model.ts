@@ -36,8 +36,8 @@ const transactionSchema: Schema<TransactionModel> = new Schema(
     },
     anonymous_key: { type: String, required: true, unique: true },
     owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

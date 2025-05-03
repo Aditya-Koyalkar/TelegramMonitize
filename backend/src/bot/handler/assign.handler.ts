@@ -1,8 +1,6 @@
 import { io } from "../../index.js";
-import client from "../../lib/better-auth/db.js";
 import { Group } from "../../lib/database/models/group.model.js";
 import bot from "../../lib/telegram/config.js";
-import { ObjectId } from "mongodb";
 
 const successResponse = `# 🎉 Group Successfully Registered!
 
@@ -86,16 +84,7 @@ export const assignGroup = () => {
           name: groupName,
           owner: userId,
         });
-        const dbClient = client.db();
-        const userCollection = dbClient.collection("user");
-        await userCollection.updateOne(
-          { _id: new ObjectId(userId) },
-          {
-            $push: {
-              telegram_groups: newGroup.id,
-            },
-          }
-        );
+
         bot.sendMessage(chatId, successResponse, {
           parse_mode: "Markdown",
         });
@@ -104,6 +93,7 @@ export const assignGroup = () => {
       }
       bot.sendMessage(chatId, "please provide a valid Group User-ID");
     } catch (e) {
+      console.log(e);
       bot.sendMessage(chatId, errorResponse, { parse_mode: "Markdown" });
     }
   });

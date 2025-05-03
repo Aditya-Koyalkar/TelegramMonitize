@@ -26,8 +26,7 @@ const groupSchema: Schema<GroupModel> = new Schema(
     currency_code: { type: String, default: "USD", required: true },
     price: { type: Number, required: true, default: 0 },
     owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
       required: true,
     },
   },

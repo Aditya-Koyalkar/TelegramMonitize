@@ -9,6 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import useWebsocket from "@/hooks/use-websocket";
 import { axiosDashboardInstance } from "@/lib/axios/config";
 import socket from "@/lib/socket/config";
+import { useAuth } from "@clerk/nextjs";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { HandCoins } from "lucide-react";
@@ -17,7 +18,7 @@ import { toast } from "sonner";
 
 const PayoutHistory = ({ userId }: { userId: string }) => {
   const queryClient = useQueryClient();
-
+  const { getToken } = useAuth();
   const {
     data: payouts,
     error,
@@ -25,7 +26,12 @@ const PayoutHistory = ({ userId }: { userId: string }) => {
   } = useQuery({
     queryKey: ["payouts"],
     queryFn: async () => {
-      const res = await axiosDashboardInstance.get<ApiResponse<IPayout[]>>("/payout-history");
+      const token = await getToken();
+      const res = await axiosDashboardInstance.get<ApiResponse<IPayout[]>>("/payout-history", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       return res.data.result;
     },

@@ -7,6 +7,8 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
+    "@clerk/backend": "^1.31.2",
+    "@hono/clerk-auth": "^2.0.0",
     "@hono/node-server": "^1.13.8",
     "@paddle/paddle-node-sdk": "^2.5.1",
     "@types/node-telegram-bot-api": "^0.64.7",

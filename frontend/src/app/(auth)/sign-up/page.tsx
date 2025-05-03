@@ -1,8 +1,8 @@
 import React from "react";
-import AuthForm from "../_components/auth-form";
+import { SignUp } from "@clerk/nextjs";
 
 const SignUpPage = () => {
-  return <AuthForm action="Sign Up" />;
+  return <SignUp />;
 };
 
 export default SignUpPage;

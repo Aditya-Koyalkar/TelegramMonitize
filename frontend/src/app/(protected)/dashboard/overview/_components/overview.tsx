@@ -8,15 +8,19 @@ import { ApiResponse, OverviewResponse } from "@/@types/response";
 import CustomersTable from "./customers-table";
 import useWebsocket from "@/hooks/use-websocket";
 import socket from "@/lib/socket/config";
+import { useAuth } from "@clerk/nextjs";
 
 export type QueryRes = UseQueryResult<ApiResponse<OverviewResponse | null>, Error>;
 
 const Overview = ({ userId }: { userId: string }) => {
   const queryClient = useQueryClient();
-
+  const { getToken } = useAuth();
   const query = useQuery({
     queryKey: ["overview"],
-    queryFn: () => getOverview(),
+    queryFn: async () => {
+      const token = await getToken();
+      return getOverview(token || "");
+    },
   });
   if (query.error) {
     toast("Error", {

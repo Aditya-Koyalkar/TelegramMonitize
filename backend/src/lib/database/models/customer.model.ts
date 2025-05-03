@@ -26,8 +26,8 @@ const customerSchema: Schema<CustomerModel> = new Schema(
       ref: "Subscription",
     },
     owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

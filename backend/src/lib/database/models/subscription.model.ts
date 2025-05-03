@@ -39,8 +39,7 @@ interface SubscriptionModel extends Omit<ISubscription, "_id">, Document {
 const subscriptionSchema: Schema<SubscriptionModel> = new Schema(
   {
     owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
       required: true,
     },
     telegram_user_id: Number,

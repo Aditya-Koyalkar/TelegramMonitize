@@ -13,6 +13,7 @@ import useWebsocket from "@/hooks/use-websocket";
 import { axiosDashboardInstance } from "@/lib/axios/config";
 import socket from "@/lib/socket/config";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RiLoader3Fill, RiMoneyDollarCircleFill } from "@remixicon/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -24,7 +25,7 @@ import { z } from "zod";
 const BalanceCard = ({ userId }: { userId: string }) => {
   const [isPayoutDialogOpen, setIsPayoutDialogOpen] = useState(false);
   const queryClient = useQueryClient();
-
+  const { getToken } = useAuth();
   const {
     data: wallet,
     error,
@@ -32,7 +33,12 @@ const BalanceCard = ({ userId }: { userId: string }) => {
   } = useQuery({
     queryKey: ["wallet"],
     queryFn: async () => {
-      const res = await axiosDashboardInstance.get<ApiResponse<IWallet>>("/wallet");
+      const token = await getToken();
+      const res = await axiosDashboardInstance.get<ApiResponse<IWallet>>("/wallet", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       return res.data.result;
     },

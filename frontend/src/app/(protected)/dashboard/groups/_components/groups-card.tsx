@@ -14,6 +14,7 @@ import { P } from "@/components/custom/P";
 import GroupMenu from "./group-menu";
 import socket from "@/lib/socket/config";
 import useWebsocket from "@/hooks/use-websocket";
+import { useAuth } from "@clerk/nextjs";
 
 interface Props {
   group: IGroup;
@@ -63,6 +64,7 @@ function GroupCard({ group }: Props) {
 
 const GroupCardWrapper = ({ userId }: { userId: string }) => {
   const queryClient = useQueryClient();
+  const { getToken } = useAuth();
   useWebsocket(() => {
     socket.on("group-assignned", (newGroup: IGroup) => {
       queryClient.setQueryData(["groups"], (oldData: ApiResponse<IGroup[]>) => {
@@ -82,7 +84,16 @@ const GroupCardWrapper = ({ userId }: { userId: string }) => {
     isLoading,
   } = useQuery({
     queryKey: ["groups"],
-    queryFn: async () => (await axiosDashboardInstance.get<ApiResponse<IGroup[]>>("/groups")).data,
+    queryFn: async () => {
+      const token = await getToken();
+      return (
+        await axiosDashboardInstance.get<ApiResponse<IGroup[]>>("/groups", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+      ).data;
+    },
   });
 
   if (error) {

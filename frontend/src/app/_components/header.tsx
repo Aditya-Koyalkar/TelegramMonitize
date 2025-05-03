@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Menu, MessageCircle } from "lucide-react";
+import { SignInButton, SignUpButton } from "@clerk/nextjs";
 
 export function Header() {
   return (
@@ -53,10 +54,10 @@ export function Header() {
                 <Link href="#faq">FAQ</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/login">Log in</Link>
+                <SignInButton>Log in</SignInButton>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/signup">Sign up</Link>
+                <SignUpButton>Sign up</SignUpButton>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

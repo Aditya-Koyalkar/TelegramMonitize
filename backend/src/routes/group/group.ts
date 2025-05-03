@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import type { AuthSession } from "../../lib/better-auth/auth-types.js";
+import type { AuthSession } from "../../lib/clerk/auth-types.js";
 import { Group, type IGroup } from "../../lib/database/models/group.model.js";
 import { ValidationError } from "../../middleware/error.middleware.js";
 import paddle from "../../lib/paddle/config.js";
@@ -8,9 +8,9 @@ import { PADDLE_PRODUCT_ID } from "../../lib/env.js";
 const groupRoutes = new Hono<AuthSession>();
 
 groupRoutes.get("/groups", async (c) => {
-  const user = c.get("user");
+  const userId = c.get("userId")!;
   const groups = await Group.find({
-    owner: user?.id,
+    owner: userId,
   }).sort({
     createdAt: -1,
   });
@@ -32,7 +32,7 @@ groupRoutes.delete("/groups/:id", async (c) => {
 });
 
 groupRoutes.post("/groups", async (c) => {
-  const user = c.get("user")!;
+  const userId = c.get("userId")!;
   const { body } = await c.req.json();
   const priceToUpdate = (Number(body.price) * 100).toString();
   const groupInfo = await Group.findOne({
@@ -79,7 +79,7 @@ groupRoutes.post("/groups", async (c) => {
         frequency: 1,
       },
       taxMode: "external",
-      description: `Created by user ${user.email}`,
+      description: ``,
       unitPrice: {
         amount: priceToUpdate,
         currencyCode: "USD",

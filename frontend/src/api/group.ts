@@ -1,16 +1,14 @@
 import { ApiResponse } from "@/@types/response";
-import { cookies } from "next/headers";
 import { IGroup } from "@/@types/models";
 import { axiosBaseInstance, axiosDashboardInstance } from "@/lib/axios/config";
 import { parseError } from "@/lib/utils";
+import { useAuth } from "@clerk/nextjs";
 
-export const getGroups = async (): Promise<ApiResponse<IGroup[]>> => {
-  const cookieHeader = (await cookies()).toString();
-
+export const getGroups = async (token: string): Promise<ApiResponse<IGroup[]>> => {
   try {
     const res = await axiosDashboardInstance.get<ApiResponse<IGroup[]>>("/groups", {
       headers: {
-        Cookie: cookieHeader,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -27,13 +25,11 @@ export const getGroups = async (): Promise<ApiResponse<IGroup[]>> => {
   }
 };
 
-export const findOneGroup = async (id: string): Promise<ApiResponse<IGroup | null>> => {
-  const cookieHeader = (await cookies()).toString();
-
+export const findOneGroup = async (id: string, token: string): Promise<ApiResponse<IGroup | null>> => {
   try {
     const res = await axiosBaseInstance.get<ApiResponse<IGroup>>(`/groups/${id}`, {
       headers: {
-        Cookie: cookieHeader,
+        Authorization: `Bearer ${token}`,
       },
     });
 

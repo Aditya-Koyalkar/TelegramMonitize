@@ -17,8 +17,7 @@ interface WalletModel extends Omit<IWallet, "_id">, Document {
 const walletSchema: Schema<WalletModel> = new Schema(
   {
     owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
       required: true,
     },
     balance: { type: Number, required: true, default: 0 },

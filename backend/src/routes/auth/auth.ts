@@ -1,15 +1,15 @@
 import { Hono } from "hono";
-import type { AuthSession } from "../../lib/better-auth/auth-types.js";
+import type { AuthSession } from "../../lib/clerk/auth-types.js";
+import {} from "@clerk/backend";
 
 const route = new Hono<AuthSession>();
 
 route.get("/session", async (c) => {
-  const user = c.get("user");
-  const session = c.get("session");
-  if (!user) {
+  const userId = c.get("userId");
+  if (!userId) {
     return c.body(null, 401);
   }
-  return c.json({ session, user }, 200);
+  return c.json({ message: "authenticated" }, 200);
 });
 
 export default route;

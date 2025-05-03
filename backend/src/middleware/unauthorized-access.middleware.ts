@@ -2,9 +2,9 @@ import type { Context, Next } from "hono";
 import { ValidationError } from "./error.middleware.js";
 
 const sessionValidator = (c: Context, next: Next) => {
-  const user = c.get("user");
+  const userId = c.get("userId");
   const path = c.req.path;
-  if (path.startsWith("/api/v1/dashboard") && !user) {
+  if (path.startsWith("/api/v1/dashboard") && !userId) {
     throw new ValidationError(
       "Unauthorized access attempt detected.",
       {

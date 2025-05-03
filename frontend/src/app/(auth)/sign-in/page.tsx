@@ -1,7 +1,7 @@
-import AuthForm from "../_components/auth-form";
+import { SignIn } from "@clerk/nextjs";
 
 const SignInPage = () => {
-  return <AuthForm action="Sign In" />;
+  return <SignIn />;
 };
 
 export default SignInPage;

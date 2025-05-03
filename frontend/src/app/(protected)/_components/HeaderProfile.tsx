@@ -11,25 +11,25 @@ import { RiClipboardFill, RiLogoutCircleFill } from "@remixicon/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { signOut, useSession } from "@/lib/better-auth/auth-client";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { paragraphVariants } from "@/components/custom/P";
 import { toast } from "sonner";
+import { SignOutButton, useUser } from "@clerk/nextjs";
 
 const HeaderProfile = () => {
-  const session = useSession();
+  const session = useUser();
   const router = useRouter();
-  const { isPending, data } = session;
-  if (isPending) {
+  const { isLoaded, user } = session;
+  if (!isLoaded || !user) {
     return <Skeleton className="size-10 rounded-full" />;
   }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage src={data?.user?.image || ""} />
-          <AvatarFallback>{(data?.user.name || "U").slice(0, 1)}</AvatarFallback>
+          <AvatarImage src={user?.imageUrl || ""} />
+          <AvatarFallback>{(user?.firstName || "U").slice(0, 1)}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
@@ -47,7 +47,7 @@ const HeaderProfile = () => {
         <DropdownMenuItem
           onClick={() => {
             navigator.clipboard
-              .writeText(data?.user.id || "")
+              .writeText(user.id || "")
               .then(() => {
                 toast("Colpied!", {
                   description: "User Key copied",
@@ -69,25 +69,9 @@ const HeaderProfile = () => {
             User Key
           </span>
         </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={async () => {
-            await signOut();
-
-            router.push("/sign-in");
-          }}
-          className="flex items-center justify-center gap-2 px-3 py-4"
-        >
+        <DropdownMenuItem className="flex items-center justify-center gap-2 px-3 py-4">
           <RiLogoutCircleFill />
-          <span
-            className={cn(
-              paragraphVariants({
-                size: "small",
-                weight: "medium",
-              })
-            )}
-          >
-            Logout
-          </span>
+          <SignOutButton />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

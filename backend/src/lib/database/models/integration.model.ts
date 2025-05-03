@@ -19,8 +19,7 @@ interface IntegrationModel extends Omit<IIntegration, "_id">, Document {
 const integrationSchema: Schema<IntegrationModel> = new Schema(
   {
     owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
       required: true,
     },
     paypal: {
