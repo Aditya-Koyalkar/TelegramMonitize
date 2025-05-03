@@ -1,22 +1,15 @@
-import { findOneGroup } from "@/api/group";
 import { randomBytes } from "crypto";
-import Checkout from "./_components/checkout";
-import { P } from "@/components/custom/P";
+import CheckoutWrapper from "./_components/checkout-wrapper";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
-const page = async ({ params }: Props) => {
-  const groupId = (await params).id;
+const Page = async ({ params }: Props) => {
   const anonymousKey = randomBytes(10).toString("hex");
+  const groupId = (await params).id;
 
-  const response = await findOneGroup(groupId);
-  const group = response.result;
-  if (!group) {
-    return <P>{response.message}</P>;
-  }
-  return <Checkout group={group} anonymousKey={anonymousKey} />;
+  return <CheckoutWrapper groupId={groupId} anonymousKey={anonymousKey} />;
 };
 
-export default page;
+export default Page;

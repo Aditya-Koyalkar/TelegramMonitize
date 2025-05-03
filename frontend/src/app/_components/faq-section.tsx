@@ -18,15 +18,15 @@ export function FaqSection() {
             <AccordionItem value="item-1">
               <AccordionTrigger>How does the payment process work?</AccordionTrigger>
               <AccordionContent>
-                When a user wants to join your group, they'll be directed to a secure payment page. After successful payment, our bot automatically
-                sends them an invite link to join your group. The funds are transferred to your account after our service fee.
+                When a user wants to join your group, they&apos;ll be directed to a secure payment page. After successful payment, our bot
+                automatically sends them an invite link to join your group. The funds are transferred to your account after our service fee.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
-              <AccordionTrigger>What happens when a member's subscription expires?</AccordionTrigger>
+              <AccordionTrigger>What happens when a member&apos;s subscription expires?</AccordionTrigger>
               <AccordionContent>
-                Our bot will automatically send payment reminders before expiration. If payment isn't renewed, the bot will remove the member from
-                your group and notify them about the reason for removal.
+                Our bot will automatically send payment reminders before expiration. If payment isn&apos;t renewed, the bot will remove the member
+                from your group and notify them about the reason for removal.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">

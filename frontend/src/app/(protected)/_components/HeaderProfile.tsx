@@ -11,7 +11,6 @@ import { RiClipboardFill, RiLogoutCircleFill } from "@remixicon/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { paragraphVariants } from "@/components/custom/P";
 import { toast } from "sonner";
@@ -19,7 +18,6 @@ import { SignOutButton, useUser } from "@clerk/nextjs";
 
 const HeaderProfile = () => {
   const session = useUser();
-  const router = useRouter();
   const { isLoaded, user } = session;
   if (!isLoaded || !user) {
     return <Skeleton className="size-10 rounded-full" />;
