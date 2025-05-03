@@ -79,7 +79,7 @@ groupRoutes.post("/groups", async (c) => {
         frequency: 1,
       },
       taxMode: "external",
-      description: ``,
+      description: `${groupInfo.name} price`,
       unitPrice: {
         amount: priceToUpdate,
         currencyCode: "USD",
