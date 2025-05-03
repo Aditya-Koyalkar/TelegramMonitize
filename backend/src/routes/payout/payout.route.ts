@@ -11,18 +11,18 @@ import { io } from "../../index.js";
 const paypalRoute = new Hono<AuthSession>();
 
 paypalRoute.get("connect", async (c) => {
-  const user = c.get("user")!;
-  const integration = await Integration.findOne({ owner: user.id });
+  const userId = c.get("userId")!;
+  const integration = await Integration.findOne({ owner: userId });
   return c.json({ success: true, message: "", result: integration }, 200);
 });
 
 paypalRoute.post("connect", async (c) => {
-  const user = c.get("user")!;
+  const userId = c.get("userId")!;
   const { email } = await c.req.json();
-  let integration = await Integration.findOne({ owner: user.id });
+  let integration = await Integration.findOne({ owner: userId });
   if (integration) {
     integration = await Integration.findOneAndUpdate(
-      { owner: user.id },
+      { owner: userId },
       {
         paypal: {
           email,
@@ -34,7 +34,7 @@ paypalRoute.post("connect", async (c) => {
     );
   } else {
     integration = await Integration.create({
-      owner: user.id,
+      owner: userId,
       paypal: {
         email,
       },
@@ -44,15 +44,15 @@ paypalRoute.post("connect", async (c) => {
 });
 
 paypalRoute.post("/payout", async (c) => {
-  const user = c.get("user")!;
+  const userId = c.get("userId")!;
   const { amount } = await c.req.json();
   const recient = randomBytes(10).toString("hex");
   const token = await generatePaypalAccessToken();
   const integration = await Integration.findOne({
-    owner: user.id,
+    owner: userId,
   });
   const wallet = await Wallet.findOne({
-    owner: user.id,
+    owner: userId,
   });
   if (!wallet) {
     throw "Server error.No wallet found";
@@ -114,7 +114,7 @@ paypalRoute.post("/payout", async (c) => {
   const payoutItemStatus = resPaypalDetails.data.items[0].transaction_status;
 
   const payout = await Payout.create({
-    owner: user.id,
+    owner: userId,
     amount,
     paypal: {
       payout_batch_id: payoutBatchId,
@@ -122,7 +122,7 @@ paypalRoute.post("/payout", async (c) => {
     },
     status: payoutItemStatus,
   });
-  io.to(user.id).emit("update-payout", "refetch");
+  io.to(userId).emit("update-payout", "refetch");
 
   return c.json(
     {
