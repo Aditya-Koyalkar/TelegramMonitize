@@ -31,6 +31,7 @@ import { IGroup } from "@/@types/models";
 import { MenuIcon } from "lucide-react";
 import { paragraphVariants } from "@/components/custom/P";
 import { APP_DOMAIN } from "@/utils/env";
+import { useAuth } from "@clerk/nextjs";
 
 const GroupMenu = ({ id, price }: { id: string; price: number }) => {
   const [isPriceDialogOpen, setIsPriceDialogOpen] = React.useState(false);
@@ -131,7 +132,7 @@ export const PriceGroupForm = ({
   setIsPriceDialogOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const queryClient = useQueryClient();
-
+  const { getToken } = useAuth();
   const form = useForm<TPriceGroupForm>({
     resolver: zodResolver(pricingFormSchema),
     defaultValues: {
@@ -142,12 +143,22 @@ export const PriceGroupForm = ({
 
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["groups"],
-    mutationFn: async (values: TPriceGroupForm) =>
-      (
-        await axiosDashboardInstance.post<ApiResponse<IGroup>>("/groups", {
-          body: values,
-        })
-      ).data,
+    mutationFn: async (values: TPriceGroupForm) => {
+      const token = await getToken();
+      return (
+        await axiosDashboardInstance.post<ApiResponse<IGroup>>(
+          "/groups",
+          {
+            body: values,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+      ).data;
+    },
     onSuccess: (res) => {
       queryClient.setQueryData(["groups"], (oldData: ApiResponse<IGroup[]>) => {
         const oldGroups = oldData.result;

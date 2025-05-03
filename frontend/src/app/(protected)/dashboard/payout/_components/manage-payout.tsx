@@ -100,7 +100,7 @@ export const IntegrationGroupForm = ({
   integration: IIntegration | undefined;
 }) => {
   const queryClient = useQueryClient();
-
+  const { getToken } = useAuth();
   const form = useForm<TIntegrationGroupForm>({
     resolver: zodResolver(integrationFormSchema),
     defaultValues: {
@@ -110,8 +110,16 @@ export const IntegrationGroupForm = ({
 
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["groups"],
-    mutationFn: async (values: TIntegrationGroupForm) =>
-      (await axiosDashboardInstance.post<ApiResponse<IIntegration>>("/paypal/connect", values)).data,
+    mutationFn: async (values: TIntegrationGroupForm) => {
+      const token = await getToken();
+      return (
+        await axiosDashboardInstance.post<ApiResponse<IIntegration>>("/paypal/connect", values, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+      ).data;
+    },
     onSuccess: (res) => {
       queryClient.setQueryData(["connection"], (oldData: ApiResponse<IIntegration>) => {
         const newIntegration = res.result;
