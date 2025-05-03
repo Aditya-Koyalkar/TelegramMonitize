@@ -2,7 +2,6 @@ import { ApiResponse } from "@/@types/response";
 import { IGroup } from "@/@types/models";
 import { axiosBaseInstance, axiosDashboardInstance } from "@/lib/axios/config";
 import { parseError } from "@/lib/utils";
-import { useAuth } from "@clerk/nextjs";
 
 export const getGroups = async (token: string): Promise<ApiResponse<IGroup[]>> => {
   try {
