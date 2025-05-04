@@ -7,6 +7,7 @@ import paypalRoute from "./payout/payout.route.js";
 import publicGroupRoute from "./public-group/publicgroup.route.js";
 import orderRoute from "./order/order.route.js";
 import paddleWebhookRoute from "./paddle-webhook/paddlewebhook.route.js";
+import validateCronRoute from "./cron-jobs/validation.route.js";
 const routes = new Hono();
 
 routes.route("/v1/dashboard", statsRoutes);
@@ -17,4 +18,5 @@ routes.route("/v1/dashboard/paypal", paypalRoute);
 routes.route("/v1", publicGroupRoute);
 routes.route("/v1", orderRoute);
 routes.route("/v1", paddleWebhookRoute);
+routes.route("/v1/cron", validateCronRoute);
 export default routes;
